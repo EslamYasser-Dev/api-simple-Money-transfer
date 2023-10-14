@@ -31,11 +31,13 @@ To list all accounts, send a `GET` request to `/accounts`.
 
 To transfer money, send a `POST` request to `/transfer` with a JSON body like this:
 
-{
-    "from": "account1",
-    "to": "account2",
-    "amount": "655.91"
-}
+sample/transfer
+`{
+    "FromAccount": "7a3cbfee-2e44-41bd-b89b-ce27b6349562",
+    "ToAccount": "4cc8cf60-680d-4e84-9d02-3e4eb7b14be5",
+    "Amount": "555.25"
+}`
+tested with postman
 
 as following
 !Alt picture loading
