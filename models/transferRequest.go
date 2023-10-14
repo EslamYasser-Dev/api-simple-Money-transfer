@@ -1,7 +1,7 @@
 package model
 
 type TransferRequest struct {
-	FromAccount string `json:"from"`
-	ToAccount   string `json:"to"`
-	Amount      string `json:"balance"`
+	FromAccount string `json:"FromAccount"`
+	ToAccount   string `json:"ToAccount"`
+	Amount      string `json:"Amount"`
 }

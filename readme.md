@@ -16,27 +16,28 @@ This is an HTTP handler function that lists all accounts. It responds to `GET` r
 
 This is an HTTP handler function that transfers money from one account to another. It responds to `POST` requests at the `/transfer` endpoint. The request body should be a JSON object with `from`, `to`, and `amount` fields.
 
-## Usage
-
-To use this package, import it in your Go application:
-1. ensure that you have installed go on your local machine before
-2. clone this repository git clone https://github.com/EslamYasser-Dev/api.git
-3. open terminal go to the repository directory called moneytrans.
-4. use command go run main.go to run.
+## install
+1. ensure that you have installed go programming language on your local machine before
+2. clone this repository` git clone https://github.com/EslamYasser-Dev/api.git`
+3. open terminal go to the repository directory called `moneytrans` or run treminal inside this directory.
+4. use command `go run main.go` to run.
 
 ## Testing
 You can test this API using any HTTP client like curl or Postman. Remember to run your server before testing.
 
-To list all accounts, send a GET request to /accounts.
+you can change the port number from main `const port string = "whatever port you want to listen on"`
 
-To transfer money, send a POST request to /transfer with a JSON body like this:
+To list all accounts, send a `GET` request to `/accounts`.
+
+To transfer money, send a `POST` request to `/transfer` with a JSON body like this:
 
 {
     "from": "account1",
     "to": "account2",
-    "amount": 50
+    "amount": "655.91"
 }
 
 as following
 !Alt picture loading
-!url `https://ibb.co/ckvNsWY`
+[url=https://ibb.co/ckvNsWY][img]https://i.ibb.co/7jzG03k/postman.png[/img][/url]
+

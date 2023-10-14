@@ -5,69 +5,78 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"sync"
 
 	model "moneytrans/models"
 	store "moneytrans/store"
 )
 
-// ListAccounts is an HTTP handler function that lists all accounts.
-// It responds to GET requests at the /accounts endpoint.
+var mutex = &sync.Mutex{}
+
 func ListAccounts(w http.ResponseWriter, r *http.Request) {
 	var accounts []model.Account
-	// Loop over all accounts in the store and append them to the accounts slice
 	for _, account := range store.AccountStore {
 		accounts = append(accounts, account)
 	}
-	// Encode the accounts slice to JSON and send it as a response
 	json.NewEncoder(w).Encode(accounts)
 }
 
-// Transfer is an HTTP handler function that transfers money from one account to another.
-// It responds to POST requests at the /transfer endpoint.
 func Transfer(w http.ResponseWriter, r *http.Request) {
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	var request model.TransferRequest
-	// Decode the JSON request body into the request variable
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	// Validate the existence of sender and receiver
 	fromAccount, ok := store.AccountStore[request.FromAccount]
 	if !ok {
-		http.Error(w, "Sender account is not found", http.StatusNotFound)
+		http.Error(w, "Sender ID is wrong", http.StatusNotFound)
 		return
 	}
 
 	toAccount, ok := store.AccountStore[request.ToAccount]
 	if !ok {
-		http.Error(w, "The Receiver data is wrong", http.StatusNotFound)
+		http.Error(w, "The Receiver ID is wrong", http.StatusNotFound)
 		return
 	}
 
-	// Convert balances from string to integer to avoid floating point precision issues
-	fromBalance, _ := strconv.Atoi(fromAccount.Balance)
-	toBalance, _ := strconv.Atoi(toAccount.Balance)
-	requestAmount, _ := strconv.Atoi(request.Amount)
+	fromBalance, err := strconv.ParseFloat(fromAccount.Balance, 64)
+	if err != nil {
+		http.Error(w, "Invalid balance format for sender", http.StatusBadRequest)
+		return
+	}
 
-	// Check if sender has enough balance for the transfer
+	toBalance, err := strconv.ParseFloat(toAccount.Balance, 64)
+	if err != nil {
+		http.Error(w, "Invalid balance format for receiver", http.StatusBadRequest)
+		return
+	}
+
+	requestAmount, err := strconv.ParseFloat(request.Amount, 64)
+	if err != nil {
+		http.Error(w, "Invalid transfer amount format", http.StatusBadRequest)
+		return
+	}
+
 	if fromBalance < requestAmount {
-		http.Error(w, "Insufficient balance", http.StatusForbidden)
+		http.Error(w, "Insufficient balance", http.StatusBadRequest)
 		return
 	}
 
 	fromBalance -= requestAmount
 	toBalance += requestAmount
 
-	// Convert balances back to string format after performing the transfer
-	fromAccount.Balance = strconv.Itoa(fromBalance)
-	toAccount.Balance = strconv.Itoa(toBalance)
+	fromAccount.Balance = fmt.Sprintf("%.2f", fromBalance)
+	toAccount.Balance = fmt.Sprintf("%.2f", toBalance)
 
 	store.AccountStore[request.FromAccount] = fromAccount
 	store.AccountStore[request.ToAccount] = toAccount
 
-	fmt.Fprintf(w, "Transfer successful: %s  from %s (%s) \n to %s (%s)\n",
+	fmt.Fprintf(w, "\n Transfer Operation has been successfully done\n  %s $ has been tranfered \n from: %s => id: (%s) \n to: %s => id: (%s)\n ============================================================",
 		request.Amount,
 		fromAccount.Name, request.FromAccount,
 		toAccount.Name, request.ToAccount)
