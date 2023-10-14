@@ -3,12 +3,13 @@ package main
 import (
 	"log"
 	api "moneytrans/api"
+	store "moneytrans/store"
 	"net/http"
 )
 
 func main() {
-	filepath := "./accounts.json"
-	api.LoadAccountsFromJSON(filepath)
+	const filepath string = "./accounts.json"
+	store.LoadAccountsFromJSON(filepath)
 	http.HandleFunc("/accounts", api.ListAccounts)
 	http.HandleFunc("/transfer", api.Transfer)
 	print("\t -= welcome to money transfer REST API =-\n\t ***********************************************\n \t  - [POST] to transfer money use: http://localhost:8570/transfer  \n")

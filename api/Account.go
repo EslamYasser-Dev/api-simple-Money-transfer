@@ -3,9 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"os"
 	"strconv"
 
 	model "moneytrans/models"
@@ -13,24 +11,6 @@ import (
 )
 
 // to get the data from json file
-func LoadAccountsFromJSON(filepath string) {
-	jsonFile, err := os.Open(filepath)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer jsonFile.Close()
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-
-	var accounts []model.Account
-	json.Unmarshal(byteValue, &accounts)
-
-	for _, account := range accounts {
-		store.AccountStore[account.ID] = account
-	}
-
-	fmt.Println("System is ready to make a transfer.")
-}
 
 func ListAccounts(w http.ResponseWriter, r *http.Request) {
 	var accounts []model.Account

@@ -31,11 +31,12 @@ To list all accounts, send a GET request to /accounts.
 
 To transfer money, send a POST request to /transfer with a JSON body like this:
 
-JSON
-This code is AI-generated. Review and use carefully. Visit our FAQ for more information.
-
 {
     "from": "account1",
     "to": "account2",
     "amount": 50
 }
+
+as following
+!Alt picture loading
+url `https://ibb.co/ckvNsWY`
