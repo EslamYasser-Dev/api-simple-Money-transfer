@@ -75,9 +75,12 @@ func Transfer(w http.ResponseWriter, r *http.Request) {
 
 	store.AccountStore[request.FromAccount] = fromAccount
 	store.AccountStore[request.ToAccount] = toAccount
+	store.SaveAccountsToJSON("./accounts") //save changes
 
 	fmt.Fprintf(w, "\n Transfer Operation has been successfully done\n  %s $ has been tranfered \n from: %s => id: (%s) \n to: %s => id: (%s)\n ============================================================",
 		request.Amount,
 		fromAccount.Name, request.FromAccount,
 		toAccount.Name, request.ToAccount)
+	// json.NewEncoder(w).Encode(w)
+
 }
