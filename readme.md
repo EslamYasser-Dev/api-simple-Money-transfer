@@ -1,6 +1,5 @@
 # Money Transfer API
-
-This Go package provides a simple API for transferring money between accounts.
+it is just a simple API for transferring money between accounts.
 
 ## Functions
 
@@ -19,23 +18,24 @@ This is an HTTP handler function that transfers money from one account to anothe
 ## Usage
 
 To use this package, import it in your Go application:
-1. ensure that you have installed go on your local machine before
-2. clone this repository git clone https://github.com/EslamYasser-Dev/api.git
-3. open terminal go to the repository directory called moneytrans.
-4. use command go run main.go to run.
+1. ensure that you have installed go language on your local machine before.
+2. clone this repository `git clone https://github.com/EslamYasser-Dev/api.git`
+3. open terminal go to the repository directory called `moneytrans` or open the terminal inside this directory/folder.
+4. use command `go run main.go` to run.
 
 ## Testing
 You can test this API using any HTTP client like curl or Postman. Remember to run your server before testing.
 
-To list all accounts, send a GET request to /accounts.
+To list all accounts, send a `GET` request to /accounts.
 
-To transfer money, send a POST request to /transfer with a JSON body like this:
+To transfer money, send a `POST `request to /transfer with a JSON body like this:
 
-JSON
-This code is AI-generated. Review and use carefully. Visit our FAQ for more information.
+`{
+    "from": "account1",   // this must be and id of the sender account
+    "to": "account2",       // this must be id for the receiver accout 
+    "amount": "50"          
+}`
 
-{
-    "from": "account1",
-    "to": "account2",
-    "amount": 50
-}
+as following
+!alt image loading
+url : `https://ibb.co/ckvNsWY`
