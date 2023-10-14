@@ -38,8 +38,3 @@ sample/transfer
     "Amount": "555.25"
 }`
 tested with postman
-
-as following
-!Alt picture loading
-[url=https://ibb.co/ckvNsWY][img]https://i.ibb.co/7jzG03k/postman.png[/img][/url]
-

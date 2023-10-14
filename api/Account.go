@@ -69,6 +69,10 @@ func Transfer(w http.ResponseWriter, r *http.Request) {
 
 	fromBalance -= requestAmount
 	toBalance += requestAmount
+	if fromBalance < 0 || requestAmount < 0 {
+		http.Error(w, "Error in calculations", http.StatusBadRequest)
+		return
+	}
 
 	fromAccount.Balance = fmt.Sprintf("%.2f", fromBalance)
 	toAccount.Balance = fmt.Sprintf("%.2f", toBalance)
