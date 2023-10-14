@@ -39,4 +39,4 @@ To transfer money, send a POST request to /transfer with a JSON body like this:
 
 as following
 !Alt picture loading
-url `https://ibb.co/ckvNsWY`
+!url `https://ibb.co/ckvNsWY`

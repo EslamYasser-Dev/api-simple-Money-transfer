@@ -25,6 +25,5 @@ func LoadAccountsFromJSON(filepath string) {
 	for _, account := range accounts {
 		AccountStore[account.ID] = account
 	}
-
 	fmt.Println("System is ready to make a transfer.")
 }
